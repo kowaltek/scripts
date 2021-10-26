@@ -1,0 +1,56 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: sh -c './wait-for pgdb:5432 -- ./main'
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      MYSQL_HOST: "mysql"
+      MYSQL_PORT: "3306"
+      MYSQL_USER: "testuser"
+      MYSQL_PASS: "testpass"
+      MYSQL_DB: "sensor_cloud"
+      PG_HOST: "pgdb"
+      PG_PORT: "5432"
+      PG_USER: "testuser"
+      PG_PASS: "testpass"
+      PG_DB: "sensor_cloud"
+      OCC_MODEL_URL: "http://occmodel:8501/v1/models/occupancy-model:predict"
+      CS_HOOK_PATH: "/api/hook"
+      PORT: "3000"
+    depends_on:
+      - redis
+      - mysql
+      - pgdb
+      - occmodel
+  redis:
+    image: "redis:alpine"
+  mysql:
+    image: "mysql:8"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "sensor_cloud"
+      MYSQL_USER: "testuser"
+      MYSQL_PASSWORD: "testpass"
+      MYSQL_ROOT_PASSWORD: "root"
+  pgdb:
+    image: "postgres:12"
+    environment:
+      POSTGRES_DATABASE: "sensor_cloud"
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "testpass"
+      POSTGRES_ROOT_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+  occmodel:
+    image: "tensorflow/serving"
+    ports:
+      - "8501:8501"
+    volumes:
+      - "./model/occupancy-model:/models/occupancy-model/1"
+    environment:
+      MODEL_NAME: "occupancy-model"
