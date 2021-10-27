@@ -50,6 +50,9 @@ touch $1/internal/stores/exstore/exstore_test.go
 cd $1
 go mod init $1
 
+git init
+touch .gitignore
+
 cp $HOME/Scripts/gofiles/.vimspector.json .
 cp $HOME/Scripts/gofiles/Dockerfile .
 cp $HOME/Scripts/gofiles/docker-compose.yml .
@@ -72,4 +75,5 @@ then
 fi
 
 aws-pipelines
+
 echo $'\nRemember to check the generated aws files - pay particular attention to app entrypoint.'
