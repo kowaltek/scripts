@@ -21,13 +21,13 @@ mkdir -p $1/cmd/httpsrv \
     $1/pkg
 
 touch $1/internal/core/domain/domain.go
-echo '// package domain implements structs modelling the domain entities and value objects' >> $1/internal/core/domain/domain.go
+echo '// Package domain implements structs modelling the domain entities and value objects.' >> $1/internal/core/domain/domain.go
 echo $'package domain\n' >> $1/internal/core/domain/domain.go
 echo '//go:generate mockgen -source=./domain.go -package=mocks -destination=../../../mocks/mock_domain.go' >> $1/internal/core/domain/domain.go
 touch $1/internal/core/domain/domain_test.go
 
 touch $1/internal/core/ports/ports.go
-echo '// package ports implements interfaces modelling the core ports' >> $1/internal/core/ports/ports.go
+echo '// Package ports implements interfaces modelling the core ports.' >> $1/internal/core/ports/ports.go
 echo $'package ports\n' >> $1/internal/core/ports/ports.go
 echo '//go:generate mockgen -source=./ports.go -package=mocks -destination=../../../mocks/mock_ports.go' >> $1/internal/core/ports/ports.go
 touch $1/internal/core/ports/ports_test.go
