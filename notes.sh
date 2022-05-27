@@ -1,6 +1,6 @@
 #bin/bash
 
-noteFilename=$HOME/Notes/src/note-$(date +%Y-%m-%d).md
+noteFilename=$HOME/notes/src/note-$(date +%Y-%m-%d).md
 
 if [ ! -f $noteFilename ]; then
     echo "# Notes for $(date +%Y-%m-%d)" > $noteFilename
